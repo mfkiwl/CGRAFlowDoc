@@ -3,11 +3,10 @@
 <html lang="" >
     <head>
         <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <title>Halide · The Ultimate Documentation for CGRAFlow</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="generator" content="HonKit 3.6.21">
         
         
         
@@ -70,7 +69,7 @@
     </head>
     <body>
         
-<div class="book">
+<div class="book honkit-cloak">
     <div class="book-summary">
         
             
@@ -218,7 +217,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3.2" data-path="operations.html">
+        <li class="chapter " data-level="1.4.3.2" data-path="writing-schedules.html">
+            
+                <a href="writing-schedules.html">
+            
+                    
+                    Writing Schedules
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.3" data-path="operations.html">
             
                 <a href="operations.html">
             
@@ -231,7 +243,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3.3" data-path="application-list.html">
+        <li class="chapter " data-level="1.4.3.4" data-path="application-list.html">
             
                 <a href="application-list.html">
             
@@ -621,8 +633,8 @@
     <li class="divider"></li>
 
     <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
         </a>
     </li>
 </ul>
@@ -677,18 +689,18 @@ defined as a series of two 3x1 passes:</p>
   Var x, y, xi, yi;
 
   <span class="hljs-comment">// The algorithm - no storage or order</span>
-  blur_x(x, y) = (input(x<span class="hljs-number">-1</span>, y) + input(x, y) + input(x+<span class="hljs-number">1</span>, y))/<span class="hljs-number">3</span>;
-  blur_y(x, y) = (blur_x(x, y<span class="hljs-number">-1</span>) + blur_x(x, y) + blur_x(x, y+<span class="hljs-number">1</span>))/<span class="hljs-number">3</span>;
+  <span class="hljs-built_in">blur_x</span>(x, y) = (<span class="hljs-built_in">input</span>(x<span class="hljs-number">-1</span>, y) + <span class="hljs-built_in">input</span>(x, y) + <span class="hljs-built_in">input</span>(x+<span class="hljs-number">1</span>, y))/<span class="hljs-number">3</span>;
+  <span class="hljs-built_in">blur_y</span>(x, y) = (<span class="hljs-built_in">blur_x</span>(x, y<span class="hljs-number">-1</span>) + <span class="hljs-built_in">blur_x</span>(x, y) + <span class="hljs-built_in">blur_x</span>(x, y+<span class="hljs-number">1</span>))/<span class="hljs-number">3</span>;
 
   <span class="hljs-comment">// The schedule - defines order, locality; implies storage</span>
-  blur_y.tile(x, y, xi, yi, <span class="hljs-number">256</span>, <span class="hljs-number">32</span>)
-        .vectorize(xi, <span class="hljs-number">8</span>).parallel(y);
-  blur_x.compute_at(blur_y, x).vectorize(x, <span class="hljs-number">8</span>);
+  blur_y.<span class="hljs-built_in">tile</span>(x, y, xi, yi, <span class="hljs-number">256</span>, <span class="hljs-number">32</span>)
+        .<span class="hljs-built_in">vectorize</span>(xi, <span class="hljs-number">8</span>).<span class="hljs-built_in">parallel</span>(y);
+  blur_x.<span class="hljs-built_in">compute_at</span>(blur_y, x).<span class="hljs-built_in">vectorize</span>(x, <span class="hljs-number">8</span>);
 
   <span class="hljs-keyword">return</span> blur_y;
 }
 </code></pre>
-<h2 id="target-architecture-coreir">Target Architecture: CoreIR</h2>
+<h2 id="target-architecture-coreir-and-clockwork">Target Architecture: CoreIR and Clockwork</h2>
 <p>Note that the above box filter schedules to hardware that has a vector unit
 of size 8. This value may not be compatible based on the hardware target.
 Main-line Halide currently targets:</p>
@@ -702,32 +714,27 @@ Microsoft Direct X 12</li>
 that is used capture hardware intent is CoreIR. CoreIR&apos;s most basic features provide a
 way to create hardware modules (adders, multipliers, muxes) and connections (how to 
 wire them together). Beyond this, there are analysis and transformation passes to modify 
-the circuit. More information can be found in the <a href="coreir/intro.md">CoreIR section</a>.</p>
+the circuit. More information can be found in the <a href="coreir/intro.md">CoreIR section</a>. Instead
+of directly creating CoreIR, the memories are compiled and analyzed by Clockwork.</p>
 <h2 id="input-and-output">Input and Output</h2>
 <p>The input is a Halide application file (with algorithm and schedule) including a target
-to CoreIR. After compilation, a CoreIR json file contains the circuit for the application.
+to Clockwork. After compilation, a pair of files are created: a Clockwork memory file, and
+a CoreIR json file containing the circuits for the computation  kernels of the application.
 In addition, each design also compiles a CPU version of the same application. This CPU version
 is used to take an input image, and produce a golden reference output image. More information
 on usage, as well as which files are generated, can be found in <a href="usage.html">Usage Instructions</a>.</p>
 <h2 id="getting-started">Getting Started</h2>
-<p>There are two Halide repo that Jeff is maintaining. Although one of them is
-obsolete, it has most of the applications that the CGRAFlow is testing. We
-expect the old repo is phasing out soon.</p>
 <ul>
-<li>Old repo:
-<a href="https://github.com/jeffsetter/Halide_CoreIR" target="_blank">https://github.com/jeffsetter/Halide_CoreIR</a></li>
-<li>New repo:
+<li>Repo:
 <a href="https://github.com/StanfordAHA/Halide-to-Hardware/" target="_blank">https://github.com/StanfordAHA/Halide-to-Hardware/</a></li>
 </ul>
-<p>You should be able to compile both of them simply by invoking <code>make</code> command
+<p>You should be able to compile by simply invoking <code>make distrib</code>
 in the top level folder. Once the Halide compiler is created, a <code>make all</code> command
-in the coreir application folder will create the CoreIR files.</p>
-<pre><code>cd Halide_CoreIR/apps/coreir_examples/conv_bw
-make all
-
-cd Halide-to-Hardware/apps/hardware_benchmarks/tests/conv_3_3
+in the application folder will create the CoreIR files.</p>
+<pre><code class="lang-sh"><span class="hljs-built_in">cd</span> Halide-to-Hardware/apps/hardware_benchmarks/tests/conv_3_3
 make all
 </code></pre>
+
                                 
                                 </section>
                             
@@ -770,17 +777,61 @@ make all
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Halide","level":"1.4","depth":1,"next":{"title":"Installation","level":"1.4.1","depth":2,"path":"halide/installation.md","ref":"halide/installation.md","articles":[]},"previous":{"title":"PE Spec","level":"1.3.1","depth":2,"path":"cgra/pe-spec.md","ref":"cgra/pe-spec.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6-latest"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"halide/intro.md","mtime":"2019-08-03T22:25:34.498Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-03T22:30:06.539Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Halide","level":"1.4","depth":1,"next":{"title":"Installation","level":"1.4.1","depth":2,"path":"halide/installation.md","ref":"halide/installation.md","articles":[]},"previous":{"title":"PE Spec","level":"1.3.1","depth":2,"path":"cgra/pe-spec.md","ref":"cgra/pe-spec.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6.1"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"halide/intro.md","mtime":"2021-09-28T21:10:21.691Z","type":"markdown"},"gitbook":{"version":"3.6.21","time":"2021-09-28T21:10:40.938Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
 
         
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
     <script src="../gitbook/gitbook.js"></script>
     <script src="../gitbook/theme.js"></script>
     
         
-        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
     
         
@@ -805,10 +856,6 @@ make all
     
         
         <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
         
     
         

@@ -3,11 +3,10 @@
 <html lang="" >
     <head>
         <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <title>Application List · The Ultimate Documentation for CGRAFlow</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="generator" content="HonKit 3.6.21">
         
         
         
@@ -70,7 +69,7 @@
     </head>
     <body>
         
-<div class="book">
+<div class="book honkit-cloak">
     <div class="book-summary">
         
             
@@ -218,7 +217,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3.2" data-path="operations.html">
+        <li class="chapter " data-level="1.4.3.2" data-path="writing-schedules.html">
+            
+                <a href="writing-schedules.html">
+            
+                    
+                    Writing Schedules
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.3" data-path="operations.html">
             
                 <a href="operations.html">
             
@@ -231,7 +243,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4.3.3" data-path="application-list.html">
+        <li class="chapter active" data-level="1.4.3.4" data-path="application-list.html">
             
                 <a href="application-list.html">
             
@@ -621,8 +633,8 @@
     <li class="divider"></li>
 
     <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
         </a>
     </li>
 </ul>
@@ -691,71 +703,27 @@ here:
 <td>convolution with kernel size 1x2 (one register)</td>
 </tr>
 <tr>
-<td>conv_1_2_valid</td>
-<td>convolution with kernel size 1x2 and valid</td>
-</tr>
-<tr>
 <td>conv_2_1</td>
 <td>convolution with kernel size 2x1 (one rowbuffer)</td>
-</tr>
-<tr>
-<td>conv_2_1_valid</td>
-<td>convolution with kernel size 2x1 and valid</td>
 </tr>
 <tr>
 <td>conv_3_1</td>
 <td>convolution with kernel size 3x1 (two rowbuffers)</td>
 </tr>
 <tr>
-<td>conv_3_1_valid</td>
-<td>convolution with kernel size 3x1 and valid</td>
-</tr>
-<tr>
 <td>conv_3_3</td>
 <td>convolution with kernel size 3x3 (regs and rbs)</td>
-</tr>
-<tr>
-<td>conv_bw_valid</td>
-<td>convolution with kernel size 3x3 and valid</td>
-</tr>
-<tr>
-<td>gaussian</td>
-<td>3x3 convolution using normalized values</td>
 </tr>
 <tr>
 <td>conv_chain</td>
 <td>parameterizable design of N convs with W kernel size</td>
 </tr>
 <tr>
-<td>cascade</td>
-<td>two back-to-back convolutions</td>
-</tr>
-<tr>
 <td>conv_multi</td>
 <td>3x3 convolution with 3 multipliers (not fully unrolled)</td>
 </tr>
 <tr>
-<td>conv_rgb</td>
-<td>3x3 convolution on rgb values</td>
-</tr>
-<tr>
-<td>onebit_comp</td>
-<td>Tests not equal</td>
-</tr>
-<tr>
-<td>onebit_and</td>
-<td>Tests boolean <code>AND</code></td>
-</tr>
-<tr>
-<td>onebit_mux</td>
-<td>Tests a mux (select)</td>
-</tr>
-<tr>
-<td>onebit_bool</td>
-<td>Tests <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&amp;</code>, <code>|</code>, <code>^</code>, <code>!</code>, <code>MUX</code></td>
-</tr>
-<tr>
-<td>abs</td>
+<td>absolute</td>
 <td>Tests <code>abs</code>, <code>absd</code></td>
 </tr>
 <tr>
@@ -767,7 +735,7 @@ here:
 <td>Tests <code>&amp;</code>  <code>~</code>  <code>|</code>  <code>^</code></td>
 </tr>
 <tr>
-<td>bool</td>
+<td>boolean_ops</td>
 <td>Tests <code>&amp;&amp;</code>  <code>||</code> <code>^</code>  <code>!</code></td>
 </tr>
 <tr>
@@ -775,20 +743,20 @@ here:
 <td>Tests counter</td>
 </tr>
 <tr>
-<td>eq</td>
+<td>divide</td>
+<td>Tests <code>/</code> and <code>%</code></td>
+</tr>
+<tr>
+<td>equal</td>
 <td>Tests <code>==</code>  <code>!=</code></td>
+</tr>
+<tr>
+<td>multiply</td>
+<td>Tests <code>*</code>  <code>mult_middle</code> <code>mult_high</code></td>
 </tr>
 <tr>
 <td>inout_onebit</td>
 <td>Tests one bit input and output</td>
-</tr>
-<tr>
-<td>linebuffer_1d</td>
-<td>Tests 1d linebuffer (1x2 kernel)</td>
-</tr>
-<tr>
-<td>linebuffer_2d</td>
-<td>Tests 2d linebuffer (3x3 kernel)</td>
 </tr>
 <tr>
 <td>scomp</td>
@@ -830,12 +798,16 @@ here:
 </thead>
 <tbody>
 <tr>
-<td>harris</td>
-<td>corner detector</td>
+<td>gaussian</td>
+<td>3x3 convolution using normalized values</td>
 </tr>
 <tr>
-<td>harris_valid</td>
-<td>corner detector with valid output</td>
+<td>cascade</td>
+<td>two back-to-back convolutions</td>
+</tr>
+<tr>
+<td>harris</td>
+<td>corner detector</td>
 </tr>
 <tr>
 <td>fast_corner</td>
@@ -862,7 +834,7 @@ here:
 <td>Creates depth map from images from two viewpoints</td>
 </tr>
 <tr>
-<td>camera_pipe</td>
+<td>camera_pipeline</td>
 <td>Camera pipeline with hot pixel suppression, deinterleave, demosaic, color correct, gamma correction</td>
 </tr>
 <tr>
@@ -880,6 +852,10 @@ here:
 <tr>
 <td>seedark</td>
 <td>Algin, warp, and blend underexposed images for low light</td>
+</tr>
+<tr>
+<td>resnet_layer_gen</td>
+<td>Create a resnet layer with generator parameters</td>
 </tr>
 </tbody>
 </table>
@@ -926,17 +902,61 @@ here:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Application List","level":"1.4.3.3","depth":3,"next":{"title":"Compilation","level":"1.4.4","depth":2,"path":"halide/compilation.md","ref":"halide/compilation.md","articles":[{"title":"Hardware Lowering","level":"1.4.4.1","depth":3,"path":"halide/hardware-lowering.md","ref":"halide/hardware-lowering.md","articles":[]},{"title":"Code Generation","level":"1.4.4.2","depth":3,"path":"halide/codegen.md","ref":"halide/codegen.md","articles":[]}]},"previous":{"title":"Supported Operations","level":"1.4.3.2","depth":3,"path":"halide/operations.md","ref":"halide/operations.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6-latest"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"halide/application-list.md","mtime":"2019-08-03T22:25:34.498Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-03T22:30:06.539Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Application List","level":"1.4.3.4","depth":3,"next":{"title":"Compilation","level":"1.4.4","depth":2,"path":"halide/compilation.md","ref":"halide/compilation.md","articles":[{"title":"Hardware Lowering","level":"1.4.4.1","depth":3,"path":"halide/hardware-lowering.md","ref":"halide/hardware-lowering.md","articles":[]},{"title":"Code Generation","level":"1.4.4.2","depth":3,"path":"halide/codegen.md","ref":"halide/codegen.md","articles":[]}]},"previous":{"title":"Supported Operations","level":"1.4.3.3","depth":3,"path":"halide/operations.md","ref":"halide/operations.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6.1"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"halide/application-list.md","mtime":"2021-09-28T21:10:21.691Z","type":"markdown"},"gitbook":{"version":"3.6.21","time":"2021-09-28T21:10:40.938Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
 
         
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
     <script src="../gitbook/gitbook.js"></script>
     <script src="../gitbook/theme.js"></script>
     
         
-        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
     
         
@@ -961,10 +981,6 @@ here:
     
         
         <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
         
     
         

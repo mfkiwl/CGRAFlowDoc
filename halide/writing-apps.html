@@ -3,11 +3,10 @@
 <html lang="" >
     <head>
         <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <title>Writing Applications · The Ultimate Documentation for CGRAFlow</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="generator" content="HonKit 3.6.21">
         
         
         
@@ -61,7 +60,7 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="operations.html" />
+    <link rel="next" href="writing-schedules.html" />
     
     
     <link rel="prev" href="halide-basics.html" />
@@ -70,7 +69,7 @@
     </head>
     <body>
         
-<div class="book">
+<div class="book honkit-cloak">
     <div class="book-summary">
         
             
@@ -218,7 +217,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3.2" data-path="operations.html">
+        <li class="chapter " data-level="1.4.3.2" data-path="writing-schedules.html">
+            
+                <a href="writing-schedules.html">
+            
+                    
+                    Writing Schedules
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.3" data-path="operations.html">
             
                 <a href="operations.html">
             
@@ -231,7 +243,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3.3" data-path="application-list.html">
+        <li class="chapter " data-level="1.4.3.4" data-path="application-list.html">
             
                 <a href="application-list.html">
             
@@ -621,8 +633,8 @@
     <li class="divider"></li>
 
     <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
         </a>
     </li>
 </ul>
@@ -673,13 +685,13 @@ from a previous function. Therefore, values for an indexed function are defined
 based on the <code>x</code> and <code>y</code> coordinate of other functions. This example performs
 hot pixel suppression on Bayer images, where color channels are two pixels away
 in all directions.</p>
-<pre><code class="lang-C++">Expr max_value = max(max(input(x<span class="hljs-number">-2</span>, y), input(x+<span class="hljs-number">2</span>, y)),
-                 max(input(x, y<span class="hljs-number">-2</span>), input(x, y+<span class="hljs-number">2</span>)));
-Expr min_value = min(min(input(x<span class="hljs-number">-2</span>, y), input(x+<span class="hljs-number">2</span>, y)),
-                 min(input(x, y<span class="hljs-number">-2</span>), input(x, y+<span class="hljs-number">2</span>)));
+<pre><code class="lang-C++">Expr max_value = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">max</span>(<span class="hljs-built_in">input</span>(x<span class="hljs-number">-2</span>, y), <span class="hljs-built_in">input</span>(x+<span class="hljs-number">2</span>, y)),
+                 <span class="hljs-built_in">max</span>(<span class="hljs-built_in">input</span>(x, y<span class="hljs-number">-2</span>), <span class="hljs-built_in">input</span>(x, y+<span class="hljs-number">2</span>)));
+Expr min_value = <span class="hljs-built_in">min</span>(<span class="hljs-built_in">min</span>(<span class="hljs-built_in">input</span>(x<span class="hljs-number">-2</span>, y), <span class="hljs-built_in">input</span>(x+<span class="hljs-number">2</span>, y)),
+                 <span class="hljs-built_in">min</span>(<span class="hljs-built_in">input</span>(x, y<span class="hljs-number">-2</span>), <span class="hljs-built_in">input</span>(x, y+<span class="hljs-number">2</span>)));
 
 <span class="hljs-function">Func <span class="hljs-title">denoised</span><span class="hljs-params">(<span class="hljs-string">&quot;denoised&quot;</span>)</span></span>;
-denoised(x, y) = clamp(input(x, y), min_value, max_value);
+<span class="hljs-built_in">denoised</span>(x, y) = <span class="hljs-built_in">clamp</span>(<span class="hljs-built_in">input</span>(x, y), min_value, max_value);
 </code></pre>
 <h2 id="reduction-domain">Reduction Domain</h2>
 <p>A common pattern used in image processing is convolution of an image with filter
@@ -690,27 +702,27 @@ define a sum of products:</p>
 <span class="hljs-comment">// Define x and y loops from -1 of length 3</span>
 <span class="hljs-function">RDom <span class="hljs-title">win</span><span class="hljs-params">(<span class="hljs-number">-1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">3</span>)</span></span>;
 
-kernel(x, y) = x + y;
-convolution(x, y) = <span class="hljs-number">0</span>;  <span class="hljs-comment">// set initial value of 0</span>
-convolution(x, y) += input(x + win.x, y + win.y) *
-                     kernel(win.x, win.y);
+<span class="hljs-built_in">kernel</span>(x, y) = x + y;
+<span class="hljs-built_in">convolution</span>(x, y) = <span class="hljs-number">0</span>;  <span class="hljs-comment">// set initial value of 0</span>
+<span class="hljs-built_in">convolution</span>(x, y) += <span class="hljs-built_in">input</span>(x + win.x, y + win.y) *
+                     <span class="hljs-built_in">kernel</span>(win.x, win.y);
 </code></pre>
 <p>The default schedule for a reduction domain is to have two loops, but in
 hardware, this would create two counters. We can unroll these loops to
 duplicate the multipliers and adders, and remove the counters.</p>
-<pre><code class="lang-C++">convolution.update(<span class="hljs-number">0</span>)
-           .unroll(win.x).unroll(win.y);
+<pre><code class="lang-C++">convolution.<span class="hljs-built_in">update</span>(<span class="hljs-number">0</span>)
+           .<span class="hljs-built_in">unroll</span>(win.x).<span class="hljs-built_in">unroll</span>(win.y);
 </code></pre>
 <h2 id="select">Select</h2>
 <p>Conditional statements do not translate well into hardware. Therefore, it is
 recommended to use a version of a ternary or switch operator. In Halide, this
 is provided using the <code>select</code> statement. This generates a mux in hardware. Below
 shows how a <code>select</code> statement can be used for non-maximal suppression.</p>
-<pre><code class="lang-C++">Expr is_max = in(x, y) &gt; in(x<span class="hljs-number">-1</span>, y<span class="hljs-number">-1</span>) &amp;&amp; in(x, y) &gt; in(x, y<span class="hljs-number">-1</span>) &amp;&amp;
-    in(x, y) &gt; in(x+<span class="hljs-number">1</span>, y<span class="hljs-number">-1</span>) &amp;&amp; in(x, y) &gt; in(x<span class="hljs-number">-1</span>, y) &amp;&amp;
-    in(x, y) &gt; in(x+<span class="hljs-number">1</span>, y) &amp;&amp; in(x, y) &gt; in(x<span class="hljs-number">-1</span>, y+<span class="hljs-number">1</span>) &amp;&amp;
-    in(x, y) &gt; in(x, y+<span class="hljs-number">1</span>) &amp;&amp; in(x, y) &gt; in(x+<span class="hljs-number">1</span>, y+<span class="hljs-number">1</span>);
-hw_output(x, y) = select( is_max, in(x, y), <span class="hljs-number">0</span>);
+<pre><code class="lang-C++">Expr is_max = <span class="hljs-built_in">in</span>(x, y) &gt; <span class="hljs-built_in">in</span>(x<span class="hljs-number">-1</span>, y<span class="hljs-number">-1</span>) &amp;&amp; <span class="hljs-built_in">in</span>(x, y) &gt; <span class="hljs-built_in">in</span>(x, y<span class="hljs-number">-1</span>) &amp;&amp;
+    <span class="hljs-built_in">in</span>(x, y) &gt; <span class="hljs-built_in">in</span>(x+<span class="hljs-number">1</span>, y<span class="hljs-number">-1</span>) &amp;&amp; <span class="hljs-built_in">in</span>(x, y) &gt; <span class="hljs-built_in">in</span>(x<span class="hljs-number">-1</span>, y) &amp;&amp;
+    <span class="hljs-built_in">in</span>(x, y) &gt; <span class="hljs-built_in">in</span>(x+<span class="hljs-number">1</span>, y) &amp;&amp; <span class="hljs-built_in">in</span>(x, y) &gt; <span class="hljs-built_in">in</span>(x<span class="hljs-number">-1</span>, y+<span class="hljs-number">1</span>) &amp;&amp;
+    <span class="hljs-built_in">in</span>(x, y) &gt; <span class="hljs-built_in">in</span>(x, y+<span class="hljs-number">1</span>) &amp;&amp; <span class="hljs-built_in">in</span>(x, y) &gt; <span class="hljs-built_in">in</span>(x+<span class="hljs-number">1</span>, y+<span class="hljs-number">1</span>);
+<span class="hljs-built_in">hw_output</span>(x, y) = <span class="hljs-built_in">select</span>( is_max, <span class="hljs-built_in">in</span>(x, y), <span class="hljs-number">0</span>);
 </code></pre>
 <h2 id="array-of-funcs">Array of Funcs</h2>
 <p>Code can become a bit tedious due to writing all of the indices as above. 
@@ -723,9 +735,9 @@ can preserve the DAG structure while making it more readable using an array of
 Func largest_value[<span class="hljs-number">16</span>];
 <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">16</span>; ++i) {
   <span class="hljs-keyword">if</span> (i==<span class="hljs-number">0</span>) {
-    largest_value[i](x,y) = segment(x,y,<span class="hljs-number">0</span>);
+    largest_value[i](x,y) = <span class="hljs-built_in">segment</span>(x,y,<span class="hljs-number">0</span>);
   } <span class="hljs-keyword">else</span> {
-    largest_value[i](x,y) = max(segment(x,y,i), largest_value[i<span class="hljs-number">-1</span>](x,y));
+    largest_value[i](x,y) = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">segment</span>(x,y,i), largest_value[i<span class="hljs-number">-1</span>](x,y));
   }
 }
 </code></pre>
@@ -734,14 +746,34 @@ Func largest_value[<span class="hljs-number">16</span>];
 store the working set during execution. For example, for 3x3 convolution,
 two rows and 3 pixels are needed from the input image during execution.
 The Halide compiler will insert a linebuffer when specified in the schedule
-with a linebuffer size to match the stencil size of the kernel.</p>
+with a linebuffer size to match the stencil size of the kernel. This is done
+in the schedule with <code>store_at()</code>.</p>
 <h2 id="fifos">FIFOs</h2>
 <p>When there is convergence of <code>Func</code>s in the application, it is necessary that 
 the hardware is constructed with delays through each parts match. When a DAG
 diverges into separate <code>Func</code>s, a FIFO is needed when the delays are mismatched
-from different linebuffer sizes. Any difference in linebuffer sizes should
-be accompanied by a FIFO for the input that arrives early, so pixels arrive
-at the same time.</p>
+from different linebuffer sizes. Clockwork should generate these FIFOs properly,
+so the user does not have to do anything.</p>
+<h2 id="defining-accelerator-bounds">Defining Accelerator Bounds</h2>
+<p>A hardware accelerator is created using some scheduling calls. The output is defined
+by the function and loop level. Each of the inputs must be denoted as well. An example
+is below, which has inputs <code>hw_input</code> and <code>hw_kernel</code>, and output <code>hw_output</code> with
+loop <code>xo</code> being the first loop outside the accelerator.</p>
+<pre><code class="lang-C++">hw_output.<span class="hljs-built_in">tile</span>(x,y, xo,yo, xi,yi, imgsize, imgsize)
+  .<span class="hljs-built_in">hw_accelerate</span>(xi, xo);
+
+hw_input.<span class="hljs-built_in">stream_to_accelerator</span>();
+hw_kernel.<span class="hljs-built_in">stream_to_accelerator</span>();
+</code></pre>
+<h2 id="generator-parameters">Generator Parameters</h2>
+<p>All of the applications are written as generators. One of the main purposes of this
+is so that similar applications can be encapsulated by a single application. Parameters
+can be used to alter single integers (such as kernel size) or choose different schedules.</p>
+<pre><code class="lang-C++">    GeneratorParam&lt;<span class="hljs-keyword">int</span>&gt; ksize{<span class="hljs-string">&quot;ksize&quot;</span>, <span class="hljs-number">3</span>};    <span class="hljs-comment">// default: 3</span>
+</code></pre>
+<p>To alter the value during execution, use <code>HALIDE_GEN_ARGS</code> with the new value.</p>
+<pre><code class="lang-sh">make compare HALIDE_GEN_ARGS=<span class="hljs-string">&quot;ksize=5&quot;</span>
+</code></pre>
 
                                 
                                 </section>
@@ -774,7 +806,7 @@ at the same time.</p>
                 </a>
                 
                 
-                <a href="operations.html" class="navigation navigation-next " aria-label="Next page: Supported Operations">
+                <a href="writing-schedules.html" class="navigation navigation-next " aria-label="Next page: Writing Schedules">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -785,17 +817,61 @@ at the same time.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Writing Applications","level":"1.4.3.1","depth":3,"next":{"title":"Supported Operations","level":"1.4.3.2","depth":3,"path":"halide/operations.md","ref":"halide/operations.md","articles":[]},"previous":{"title":"Halide Basics","level":"1.4.3","depth":2,"path":"halide/halide-basics.md","ref":"halide/halide-basics.md","articles":[{"title":"Writing Applications","level":"1.4.3.1","depth":3,"path":"halide/writing-apps.md","ref":"halide/writing-apps.md","articles":[]},{"title":"Supported Operations","level":"1.4.3.2","depth":3,"path":"halide/operations.md","ref":"halide/operations.md","articles":[]},{"title":"Application List","level":"1.4.3.3","depth":3,"path":"halide/application-list.md","ref":"halide/application-list.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6-latest"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"halide/writing-apps.md","mtime":"2019-08-03T22:25:34.498Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-03T22:30:06.539Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Writing Applications","level":"1.4.3.1","depth":3,"next":{"title":"Writing Schedules","level":"1.4.3.2","depth":3,"path":"halide/writing-schedules.md","ref":"halide/writing-schedules.md","articles":[]},"previous":{"title":"Halide Basics","level":"1.4.3","depth":2,"path":"halide/halide-basics.md","ref":"halide/halide-basics.md","articles":[{"title":"Writing Applications","level":"1.4.3.1","depth":3,"path":"halide/writing-apps.md","ref":"halide/writing-apps.md","articles":[]},{"title":"Writing Schedules","level":"1.4.3.2","depth":3,"path":"halide/writing-schedules.md","ref":"halide/writing-schedules.md","articles":[]},{"title":"Supported Operations","level":"1.4.3.3","depth":3,"path":"halide/operations.md","ref":"halide/operations.md","articles":[]},{"title":"Application List","level":"1.4.3.4","depth":3,"path":"halide/application-list.md","ref":"halide/application-list.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6.1"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"halide/writing-apps.md","mtime":"2021-09-28T21:10:21.691Z","type":"markdown"},"gitbook":{"version":"3.6.21","time":"2021-09-28T21:10:40.938Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
 
         
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
     <script src="../gitbook/gitbook.js"></script>
     <script src="../gitbook/theme.js"></script>
     
         
-        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
     
         
@@ -820,10 +896,6 @@ at the same time.</p>
     
         
         <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
         
     
         

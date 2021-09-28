@@ -3,11 +3,10 @@
 <html lang="" >
     <head>
         <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <title>Compilation · The Ultimate Documentation for CGRAFlow</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="generator" content="HonKit 3.6.21">
         
         
         
@@ -70,7 +69,7 @@
     </head>
     <body>
         
-<div class="book">
+<div class="book honkit-cloak">
     <div class="book-summary">
         
             
@@ -218,7 +217,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3.2" data-path="operations.html">
+        <li class="chapter " data-level="1.4.3.2" data-path="writing-schedules.html">
+            
+                <a href="writing-schedules.html">
+            
+                    
+                    Writing Schedules
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.3" data-path="operations.html">
             
                 <a href="operations.html">
             
@@ -231,7 +243,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3.3" data-path="application-list.html">
+        <li class="chapter " data-level="1.4.3.4" data-path="application-list.html">
             
                 <a href="application-list.html">
             
@@ -621,8 +633,8 @@
     <li class="divider"></li>
 
     <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
         </a>
     </li>
 </ul>
@@ -662,12 +674,12 @@
                                 
                                 <h1 id="compilation">Compilation</h1>
 <p>With a completed Halide algorithm and schedule, it must now be passed through
-the compiler to generate CoreIR. This modified backend includes all passes
+the compiler to generate Clockwork. This modified backend includes all passes
 from the original compiler, and it adds a couple passes specifically for
 hardware generation. The full set of passes can be found in <code>src/Lower.cpp</code>.</p>
-<p>The hardware passes added are Linebuffer Extraction to find where and what
-size the linebuffers should be inserted into HalideIR, and Stream Optimization
-to change execution from sequential to simultaneous execution of stages.
+<p>There are several small lowering passes that are unique to hardware for generating
+Clockwork. These passes extract the hardware accelerators, retain n-d memory indexing,
+merge unrolled memories, inline memory constants, and retain BFloat math.
 These are described in more detail in <a href="hardware-lowering.html">Hardware Lowering</a>.</p>
 <h2 id="halideir-loop-nests">HalideIR: Loop Nests</h2>
 <p>Halide frontend language is a mix of functional definitions in the algorithm
@@ -681,10 +693,10 @@ language to a set of loop nests that define the program execution. This
 can be visualized by outputting the <code>Stmt</code> before and after each compilation
 stage as seen in the debug statements in <code>Lower.cpp</code>. An example is shown
 below:</p>
-<pre><code class="lang-C++"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Lowering before sliding window:\n&quot;</span> &lt;&lt; s &lt;&lt; <span class="hljs-string">&apos;\n&apos;</span>;
-<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Performing sliding window optimization...\n&quot;</span>;
-s = sliding_window(s, env);
-<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Lowering after sliding window:\n&quot;</span> &lt;&lt; s &lt;&lt; <span class="hljs-string">&apos;\n&apos;</span>;
+<pre><code class="lang-C++">std::cout &lt;&lt; <span class="hljs-string">&quot;Lowering before sliding window:\n&quot;</span> &lt;&lt; s &lt;&lt; <span class="hljs-string">&apos;\n&apos;</span>;
+std::cout &lt;&lt; <span class="hljs-string">&quot;Performing sliding window optimization...\n&quot;</span>;
+s = <span class="hljs-built_in">sliding_window</span>(s, env);
+std::cout &lt;&lt; <span class="hljs-string">&quot;Lowering after sliding window:\n&quot;</span> &lt;&lt; s &lt;&lt; <span class="hljs-string">&apos;\n&apos;</span>;
 </code></pre>
 
                                 
@@ -729,17 +741,61 @@ s = sliding_window(s, env);
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Compilation","level":"1.4.4","depth":2,"next":{"title":"Hardware Lowering","level":"1.4.4.1","depth":3,"path":"halide/hardware-lowering.md","ref":"halide/hardware-lowering.md","articles":[]},"previous":{"title":"Application List","level":"1.4.3.3","depth":3,"path":"halide/application-list.md","ref":"halide/application-list.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6-latest"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"halide/compilation.md","mtime":"2019-08-03T22:25:34.498Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-03T22:30:06.539Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Compilation","level":"1.4.4","depth":2,"next":{"title":"Hardware Lowering","level":"1.4.4.1","depth":3,"path":"halide/hardware-lowering.md","ref":"halide/hardware-lowering.md","articles":[]},"previous":{"title":"Application List","level":"1.4.3.4","depth":3,"path":"halide/application-list.md","ref":"halide/application-list.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6.1"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"halide/compilation.md","mtime":"2021-09-28T21:10:21.691Z","type":"markdown"},"gitbook":{"version":"3.6.21","time":"2021-09-28T21:10:40.938Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
 
         
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
     <script src="../gitbook/gitbook.js"></script>
     <script src="../gitbook/theme.js"></script>
     
         
-        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
     
         
@@ -764,10 +820,6 @@ s = sliding_window(s, env);
     
         
         <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
         
     
         

@@ -3,11 +3,10 @@
 <html lang="" >
     <head>
         <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <title>Supported Operations · The Ultimate Documentation for CGRAFlow</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="generator" content="HonKit 3.6.21">
         
         
         
@@ -64,13 +63,13 @@
     <link rel="next" href="application-list.html" />
     
     
-    <link rel="prev" href="writing-apps.html" />
+    <link rel="prev" href="writing-schedules.html" />
     
 
     </head>
     <body>
         
-<div class="book">
+<div class="book honkit-cloak">
     <div class="book-summary">
         
             
@@ -218,7 +217,20 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4.3.2" data-path="operations.html">
+        <li class="chapter " data-level="1.4.3.2" data-path="writing-schedules.html">
+            
+                <a href="writing-schedules.html">
+            
+                    
+                    Writing Schedules
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.3.3" data-path="operations.html">
             
                 <a href="operations.html">
             
@@ -231,7 +243,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3.3" data-path="application-list.html">
+        <li class="chapter " data-level="1.4.3.4" data-path="application-list.html">
             
                 <a href="application-list.html">
             
@@ -621,8 +633,8 @@
     <li class="divider"></li>
 
     <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
         </a>
     </li>
 </ul>
@@ -686,6 +698,10 @@
 <td><code>mul</code>, <code>{a,l}shr</code>, <code>add</code>, <code>sub</code></td>
 </tr>
 <tr>
+<td><code>/</code> <code>%</code></td>
+<td><code>{u,s}div</code>, <code>{u,s}rem</code>        `</td>
+</tr>
+<tr>
 <td><code>!=</code> <code>==</code></td>
 <td><code>neq</code>, <code>eq</code></td>
 </tr>
@@ -718,6 +734,10 @@
 <td><code>absd</code>, <code>mad</code></td>
 </tr>
 <tr>
+<td><code>(x*y)&gt;&gt;8</code>, <code>(x*y)&gt;&gt;16</code></td>
+<td><code>mult_middle</code>, <code>mult_high</code></td>
+</tr>
+<tr>
 <td><code>for</code></td>
 <td><code>counter</code></td>
 </tr>
@@ -726,28 +746,12 @@
 <td></td>
 </tr>
 <tr>
-<td><code>if</code></td>
-<td><code>_enable wire_</code></td>
-</tr>
-<tr>
-<td><code>_var load linebuffer stencil_</code></td>
-<td><code>_input =&gt; mxn_</code></td>
-</tr>
-<tr>
-<td><code>_var load array_</code></td>
-<td><code>_const =&gt; muxn_</code></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><code>accelerate</code></td>
+<td><code>hw_accelerate</code></td>
 <td>Create circuit between input</td>
 </tr>
 <tr>
-<td><code>linebuffer</code></td>
-<td>Create linebuffer</td>
+<td><code>store_at</code></td>
+<td>Create memory</td>
 </tr>
 <tr>
 <td><code>RDom</code></td>
@@ -755,7 +759,7 @@
 </tr>
 <tr>
 <td><code>update</code></td>
-<td>Gets reduction update handle for unrolling</td>
+<td>Gets reduction update handle for scheduling</td>
 </tr>
 <tr>
 <td><code>unroll</code></td>
@@ -798,7 +802,7 @@
 
             
                 
-                <a href="writing-apps.html" class="navigation navigation-prev " aria-label="Previous page: Writing Applications">
+                <a href="writing-schedules.html" class="navigation navigation-prev " aria-label="Previous page: Writing Schedules">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
@@ -814,17 +818,61 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Supported Operations","level":"1.4.3.2","depth":3,"next":{"title":"Application List","level":"1.4.3.3","depth":3,"path":"halide/application-list.md","ref":"halide/application-list.md","articles":[]},"previous":{"title":"Writing Applications","level":"1.4.3.1","depth":3,"path":"halide/writing-apps.md","ref":"halide/writing-apps.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6-latest"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"halide/operations.md","mtime":"2019-08-03T22:25:34.498Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-03T22:30:06.539Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Supported Operations","level":"1.4.3.3","depth":3,"next":{"title":"Application List","level":"1.4.3.4","depth":3,"path":"halide/application-list.md","ref":"halide/application-list.md","articles":[]},"previous":{"title":"Writing Schedules","level":"1.4.3.2","depth":3,"path":"halide/writing-schedules.md","ref":"halide/writing-schedules.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6.1"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"halide/operations.md","mtime":"2021-09-28T21:10:21.691Z","type":"markdown"},"gitbook":{"version":"3.6.21","time":"2021-09-28T21:10:40.938Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
 
         
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
     <script src="../gitbook/gitbook.js"></script>
     <script src="../gitbook/theme.js"></script>
     
         
-        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
     
         
@@ -849,10 +897,6 @@
     
         
         <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
         
     
         

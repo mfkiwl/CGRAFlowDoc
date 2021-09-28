@@ -3,11 +3,10 @@
 <html lang="" >
     <head>
         <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <title>Introduction · The Ultimate Documentation for CGRAFlow</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="generator" content="HonKit 3.6.21">
         
         
         
@@ -68,7 +67,7 @@
     </head>
     <body>
         
-<div class="book">
+<div class="book honkit-cloak">
     <div class="book-summary">
         
             
@@ -216,7 +215,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3.2" data-path="halide/operations.html">
+        <li class="chapter " data-level="1.4.3.2" data-path="halide/writing-schedules.html">
+            
+                <a href="halide/writing-schedules.html">
+            
+                    
+                    Writing Schedules
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.3" data-path="halide/operations.html">
             
                 <a href="halide/operations.html">
             
@@ -229,7 +241,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3.3" data-path="halide/application-list.html">
+        <li class="chapter " data-level="1.4.3.4" data-path="halide/application-list.html">
             
                 <a href="halide/application-list.html">
             
@@ -619,8 +631,8 @@
     <li class="divider"></li>
 
     <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
         </a>
     </li>
 </ul>
@@ -661,8 +673,8 @@
                                 <h1 id="introduction">Introduction</h1>
 <p><a href="https://stanfordaha.github.io/CGRAFlowDoc/" target="_blank"><img src="https://img.shields.io/badge/document-online-green.svg" alt="Document Online"></a>
 <a href="https://travis-ci.com/StanfordAHA/CGRAFlowDoc" target="_blank"><img src="https://travis-ci.com/StanfordAHA/CGRAFlowDoc.svg?branch=master" alt="Build Status"></a></p>
-<p>While advances in software tools and frameworks have enabled individuals to create interesting new applications/products in reasonable time frames, hardware designs take large teams multiple years. This disparity in required effort decreases hardware innovation and interest in the field.  To address this issue, we must make hardware/software systems easier and more fun to develop, which means that we need to enable a more &#x201C;agile&#x201D; hardware development flow &#x2013; making it possible to easily (and quickly) modify an existing design and play with the resulting system. To foster this goal of agile hardware design, we propose to create an open source hardware/software tool chain to rapidly create and validate alternative hardware implementations and a new open-source system RISC-V/CGRA SoC which will enable rapid execution/emulation of the resulting design.</p>
-<p>Today&#x2019;s CAD tools are extremely powerful and allow us to create systems of enormous complexity.  Unfortunately, their evolutional development path and focus on achieving the best possible performance mean that both their run time and the ramp time to use the tools don&#x2019;t fit into an agile design flow.  Our recent work on domain specific languages (DSLs) for creating hardware (Genesis2, FPGen, Darkroom, Rigel, Halide) has shown that a different approach is possible, and we base our new tool chain on this approach. In addition to extending this base work on generating hardware RTL, this research adds fast physical mapping of RTL to FPGAs and CGRAs, and automatic generation of hardware/software APIs to interface the new hardware into a RISC-V/Linux system.  In the spirit of agile design, we will be building this toolset in an agile manner, leveraging existing tools when possible. We will use image/vision computation as our initial domain, and we plan to work closely with Kayvon&#x2019;s CMU/Intel center in application selection. This research involves two mutually dependent tasks: the design tool flow and the configurable SoC.  The design tool flow makes use of modern SMT solvers, and we expect to make contributions in both using SMT for these applications, and in the underlying solvers as well. Below we summarize the key challenges and approaches in each of these areas.</p>
+<p>While advances in software tools and frameworks have enabled individuals to create interesting new applications/products in reasonable time frames, hardware designs take large teams multiple years. This disparity in required effort decreases hardware innovation and interest in the field.  To address this issue, we must make hardware/software systems easier and more fun to develop, which means that we need to enable a more “agile” hardware development flow – making it possible to easily (and quickly) modify an existing design and play with the resulting system. To foster this goal of agile hardware design, we propose to create an open source hardware/software tool chain to rapidly create and validate alternative hardware implementations and a new open-source system RISC-V/CGRA SoC which will enable rapid execution/emulation of the resulting design.</p>
+<p>Today’s CAD tools are extremely powerful and allow us to create systems of enormous complexity.  Unfortunately, their evolutional development path and focus on achieving the best possible performance mean that both their run time and the ramp time to use the tools don’t fit into an agile design flow.  Our recent work on domain specific languages (DSLs) for creating hardware (Genesis2, FPGen, Darkroom, Rigel, Halide) has shown that a different approach is possible, and we base our new tool chain on this approach. In addition to extending this base work on generating hardware RTL, this research adds fast physical mapping of RTL to FPGAs and CGRAs, and automatic generation of hardware/software APIs to interface the new hardware into a RISC-V/Linux system.  In the spirit of agile design, we will be building this toolset in an agile manner, leveraging existing tools when possible. We will use image/vision computation as our initial domain, and we plan to work closely with Kayvon’s CMU/Intel center in application selection. This research involves two mutually dependent tasks: the design tool flow and the configurable SoC.  The design tool flow makes use of modern SMT solvers, and we expect to make contributions in both using SMT for these applications, and in the underlying solvers as well. Below we summarize the key challenges and approaches in each of these areas.</p>
 
                                 
                                 </section>
@@ -702,17 +714,61 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Tool Chain Overview","level":"1.2","depth":1,"path":"overview/toolchain.md","ref":"overview/toolchain.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6-latest"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"README.md","mtime":"2019-08-03T22:25:34.498Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-03T22:30:06.539Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Tool Chain Overview","level":"1.2","depth":1,"path":"overview/toolchain.md","ref":"overview/toolchain.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6.1"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"README.md","mtime":"2021-09-28T21:10:21.691Z","type":"markdown"},"gitbook":{"version":"3.6.21","time":"2021-09-28T21:10:40.938Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
 
         
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
     <script src="gitbook/gitbook.js"></script>
     <script src="gitbook/theme.js"></script>
     
         
-        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
     
         
@@ -737,10 +793,6 @@
     
         
         <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
         
     
         

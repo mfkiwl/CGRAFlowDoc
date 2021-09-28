@@ -3,11 +3,10 @@
 <html lang="" >
     <head>
         <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <title>Testing · The Ultimate Documentation for CGRAFlow</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="generator" content="HonKit 3.6.21">
         
         
         
@@ -70,7 +69,7 @@
     </head>
     <body>
         
-<div class="book">
+<div class="book honkit-cloak">
     <div class="book-summary">
         
             
@@ -218,7 +217,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3.2" data-path="operations.html">
+        <li class="chapter " data-level="1.4.3.2" data-path="writing-schedules.html">
+            
+                <a href="writing-schedules.html">
+            
+                    
+                    Writing Schedules
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.3" data-path="operations.html">
             
                 <a href="operations.html">
             
@@ -231,7 +243,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3.3" data-path="application-list.html">
+        <li class="chapter " data-level="1.4.3.4" data-path="application-list.html">
             
                 <a href="application-list.html">
             
@@ -621,8 +633,8 @@
     <li class="divider"></li>
 
     <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
         </a>
     </li>
 </ul>
@@ -671,25 +683,25 @@ each pixel.</p>
 <p>To test CoreIR, pixels are set for the input pixel by pixel. For each pixel,
 the CoreIR is executed, and an output is retrieved on each cycle. A sample
 of the body of CoreIR execution from <code>run.cpp</code> is shown below:</p>
-<pre><code class="lang-C++">for (int y = 0; y &lt; input.height(); y++) {
-  for (int x = 0; x &lt; input.width(); x++) {
-    for (int c = 0; c &lt; input.channels(); c++) {
-      // set input value
-      state.setValue(&quot;self.in_arg_1_0_0&quot;, BitVector(16, input(x,y,c)));
-      // propogate to all wires
-      state.exeCombinational();
+<pre><code class="lang-C++"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> y = <span class="hljs-number">0</span>; y &lt; input.<span class="hljs-built_in">height</span>(); y++) {
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>; x &lt; input.<span class="hljs-built_in">width</span>(); x++) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> c = <span class="hljs-number">0</span>; c &lt; input.<span class="hljs-built_in">channels</span>(); c++) {
+      <span class="hljs-comment">// set input value</span>
+      state.<span class="hljs-built_in">setValue</span>(<span class="hljs-string">&quot;self.in_arg_1_0_0&quot;</span>, <span class="hljs-built_in">BitVector</span>(<span class="hljs-number">16</span>, <span class="hljs-built_in">input</span>(x,y,c)));
+      <span class="hljs-comment">// propogate to all wires</span>
+      state.<span class="hljs-built_in">exeCombinational</span>();
 
-      // read output wire
-      out_coreir(x,y,c) = state.getBitVec(&quot;self.out_0_0&quot;).to_type&lt;uint16_t&gt;();
-      if (x&gt;=stencil_size &amp;&amp; y&gt;=stencil_size &amp;&amp; out_native(x-stencil_size, y-stencil_size, c) != out_coreir(x, y, c)) {
-        printf(&quot;out_native(%d, %d, %d) = %d, but out_coreir(%d, %d, %d) = %d\n&quot;,
-               x-stencil_size, y-stencil_size, c, out_native(x-stencil_size, y-stencil_size, c),
-               x, y, c, out_coreir(x, y, c));
-        success = false;
+      <span class="hljs-comment">// read output wire</span>
+      <span class="hljs-built_in">out_coreir</span>(x,y,c) = state.<span class="hljs-built_in">getBitVec</span>(<span class="hljs-string">&quot;self.out_0_0&quot;</span>).to_type&lt;<span class="hljs-keyword">uint16_t</span>&gt;();
+      <span class="hljs-keyword">if</span> (x&gt;=stencil_size &amp;&amp; y&gt;=stencil_size &amp;&amp; <span class="hljs-built_in">out_native</span>(x-stencil_size, y-stencil_size, c) != <span class="hljs-built_in">out_coreir</span>(x, y, c)) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;out_native(%d, %d, %d) = %d, but out_coreir(%d, %d, %d) = %d\n&quot;</span>,
+               x-stencil_size, y-stencil_size, c, <span class="hljs-built_in">out_native</span>(x-stencil_size, y-stencil_size, c),
+               x, y, c, <span class="hljs-built_in">out_coreir</span>(x, y, c));
+        success = <span class="hljs-literal">false</span>;
       }
 
-      // give another rising edge (execute seq)
-      state.exeSequential();
+      <span class="hljs-comment">// give another rising edge (execute seq)</span>
+      state.<span class="hljs-built_in">exeSequential</span>();
 
     }
   }
@@ -756,17 +768,61 @@ are tested.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Testing","level":"1.4.5","depth":2,"next":{"title":"CoreIR","level":"1.5","depth":1,"path":"coreir/intro.md","ref":"coreir/intro.md","articles":[]},"previous":{"title":"Code Generation","level":"1.4.4.2","depth":3,"path":"halide/codegen.md","ref":"halide/codegen.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6-latest"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"halide/testing.md","mtime":"2019-08-03T22:25:34.498Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-03T22:30:06.539Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Testing","level":"1.4.5","depth":2,"next":{"title":"CoreIR","level":"1.5","depth":1,"path":"coreir/intro.md","ref":"coreir/intro.md","articles":[]},"previous":{"title":"Code Generation","level":"1.4.4.2","depth":3,"path":"halide/codegen.md","ref":"halide/codegen.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6.1"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"halide/testing.md","mtime":"2021-09-28T21:10:21.691Z","type":"markdown"},"gitbook":{"version":"3.6.21","time":"2021-09-28T21:10:40.938Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
 
         
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
     <script src="../gitbook/gitbook.js"></script>
     <script src="../gitbook/theme.js"></script>
     
         
-        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
     
         
@@ -791,10 +847,6 @@ are tested.</p>
     
         
         <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
         
     
         

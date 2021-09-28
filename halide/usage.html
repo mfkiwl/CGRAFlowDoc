@@ -3,11 +3,10 @@
 <html lang="" >
     <head>
         <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <title>Usage Instructions · The Ultimate Documentation for CGRAFlow</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="generator" content="HonKit 3.6.21">
         
         
         
@@ -70,7 +69,7 @@
     </head>
     <body>
         
-<div class="book">
+<div class="book honkit-cloak">
     <div class="book-summary">
         
             
@@ -218,7 +217,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3.2" data-path="operations.html">
+        <li class="chapter " data-level="1.4.3.2" data-path="writing-schedules.html">
+            
+                <a href="writing-schedules.html">
+            
+                    
+                    Writing Schedules
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.3" data-path="operations.html">
             
                 <a href="operations.html">
             
@@ -231,7 +243,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3.3" data-path="application-list.html">
+        <li class="chapter " data-level="1.4.3.4" data-path="application-list.html">
             
                 <a href="application-list.html">
             
@@ -621,8 +633,8 @@
     <li class="divider"></li>
 
     <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
         </a>
     </li>
 </ul>
@@ -665,86 +677,93 @@
 <p>See <a href="installation.html">Installation</a> section for how to install
 dependencies and how to compile Halide.</p>
 <h2 id="applications">Applications</h2>
-<p>The applications can be found for the Halide_CoreIR repo in <code>apps/coreir_examples</code> and <code>apps/coreir_tests</code>.
-The applications for the Halide-to-Hardware repo exist in <code>apps/hardware_examples/apps</code>
+<p>The applications for the Halide-to-Hardware repo exist in <code>apps/hardware_examples/apps</code>
 and <code>apps/hardware_examples/tests</code> where the distinction is that tests tend to focus
 on a much narrower scope as compared to apps.</p>
-<h2 id="make-targets">Make targets</h2>
-<p>For the Halide_CoreIR repo, generation has three basic targets: <code>make clean</code>, 
-<code>make design_top.json</code>, and <code>make out.png</code>. This will first remove old generated
-files, then create the CoreIR file, and last test the CoreIR.</p>
-<pre><code class="lang-make">make clean             # remove generated files
-     design_top.json   # create CoreIR
-     graph.png         # use graphviz to create visualization of circuit 
-     out.png           # create output file
-     test              # create CoreIR and check if circuit matches cached result
-     update_golden     # update reference CoreIR json file
-</code></pre>
-<p>For the Halide-to-Hardware repo, some of the targets were updated. These
-updates were meant to separate targets to a series of smaller steps. For
-example, generating the reference CPU output no longer also tests CoreIR.
-the basic steps remain: <code>make clean</code>, <code>make design_top.json</code>, and <code>make bin/output_coreir.png</code>.
-In addition, these same targets are duplicated with new target names. The definition
+<p>For the Halide-to-Hardware repo, the targets are build into a series of small steps.
+The basic steps are: <code>make clean</code>, <code>make clockwork</code>, and <code>make bin/output_clockwork.png</code>.
+Some targets are duplicated with new target names. The definition
 of all of these targets can be found in <code>apps/hardware_benchmarks/hw_support/hardware_targets.mk</code>.</p>
-<pre><code class="lang-make">make clean               # remove generated files (bin directory)
-     compiler            # compile updates to Halide compiler
-     generator           # create Halide generator
-     bin/design_top.json # create CoreIR design
-     design-coreir       # create CoreIR design
-     design-cpu          # create CPU design
-     bin/graph.png       # use graphviz to create visualization of circuit 
-     bin/output_cpu.png  # create output file using CPU implementation
-     run-cpu             # create output file using CPU implementation
-     bin/output_cpu.png  # create output file using CoreIR implementation
-     run-coreir          # create output file using CoreIR implementation
-     compare-coreir-cpu  # compare CoreIR output file to CPU output image
-     golden              # update reference CoreIR json file and output image
+<pre><code class="lang-make">make clean                     <span class="hljs-comment"># remove generated files (bin directory)</span>
+     compiler                  <span class="hljs-comment"># compile updates to Halide compiler</span>
+     generator                 <span class="hljs-comment"># create Halide generator</span>
+     design-clockwork          <span class="hljs-comment"># create Clockwork design</span>
+     design-cpu                <span class="hljs-comment"># create CPU design</span>
+     bin/output_cpu.png        <span class="hljs-comment"># create output file using CPU implementation</span>
+     run-cpu                   <span class="hljs-comment"># create output file using CPU implementation</span>
+     bin/output_clockwork.png  <span class="hljs-comment"># create output file using Clockwork implementation</span>
+     run-clockwork             <span class="hljs-comment"># create output file using Clockwork implementation</span>
+     compare-clockwork-cpu     <span class="hljs-comment"># compare Clockwork output file to CPU output image</span>
+     golden                    <span class="hljs-comment"># update reference CoreIR json file and output image</span>
+     mem                       <span class="hljs-comment"># run the Clockwork compiler and create design_top.json</span>
+     memtest                   <span class="hljs-comment"># test the full Clockwork/CoreIR application using verilator</span>
 </code></pre>
 <h2 id="application-folder">Application Folder</h2>
 <p>The following is a list of the files that are important for generating
 images and are used further in the flow. The CoreIR json files are created
-for mapping to the CGRA. Also, an output image, out.png, is generated as a 
-the reference image to determine if execution is correct. <code>out.png</code> is 
+for mapping to the CGRA. Also, an output image, <code>output_cpu.png</code>, is generated as a 
+the reference image to determine if execution is correct. <code>output_cpu.png</code> is 
 created using a CPU implementation of Halide, and its output should be
 used for validation during CoreIR interpretation and CGRA simulation.</p>
-<h3 id="directory-for-halidecoreir-repository">Directory for Halide_CoreIR repository</h3>
+<h3 id="directory-for-halide-to-hardware-repository">Directory for Halide-to-Hardware repository</h3>
 <pre><code>Halide_CoreIR
-&#x2514;&#x2500;&#x2500; apps
-    &#x251C;&#x2500;&#x2500; coreir_tests                       // contains simpler test cases
-    &#x2514;&#x2500;&#x2500; coreir_examples                    // contains all apps compiled to coreir
-        &#x2514;&#x2500;&#x2500; conv_bw                        // one of the apps: does 3x3 convolution
-            &#x251C;&#x2500;&#x2500; Makefile                   // specifies commands for &apos;make&apos;
-            &#x251C;&#x2500;&#x2500; pipeline.cpp               // contains Halide algorithm and schedule
-            &#x251C;&#x2500;&#x2500; design_top_golden.json     // reference coreir output expected by compiler
-            &#x251C;&#x2500;&#x2500; input.png                  // input image for testing
-            &#x251C;&#x2500;&#x2500; run.cpp                    // runs input image with design to create ouput image
-            &#x2502;
-            &#x2502;                              //// Running &apos;make all&apos; generates:
-            &#x251C;&#x2500;&#x2500; design_top.json            // generated CoreIR design
-            &#x251C;&#x2500;&#x2500; design_top.txt             // generated graphiz representation of CoreIR
-            &#x251C;&#x2500;&#x2500; graph.png                  // generated graphiz image of circuit (using &apos;make graph.png&apos;)
-            &#x2514;&#x2500;&#x2500; out.png                    // output image created during testing
-</code></pre><h3 id="directory-for-halide-to-hardware-repository">Directory for Halide-to-Hardware repository</h3>
-<pre><code>Halide_CoreIR
-&#x2514;&#x2500;&#x2500; apps
-    &#x2514;&#x2500;&#x2500; hardware_benchmarks                    // contains simpler test cases
-        &#x251C;&#x2500;&#x2500; apps                               // contains all apps compiled to coreir
-        &#x2514;&#x2500;&#x2500; tests                              // contains all simpler test cases
-            &#x2514;&#x2500;&#x2500; conv_3_3                       // one of the apps: does 3x3 convolution
-                &#x251C;&#x2500;&#x2500; Makefile                   // specifies commands for &apos;make&apos;
-                &#x251C;&#x2500;&#x2500; conv_3_3_generator.cpp     // contains Halide algorithm and schedule
-                &#x251C;&#x2500;&#x2500; input.png                  // input image for testing
-                &#x251C;&#x2500;&#x2500; process.cpp                // runs input image with design to create ouput image
-                &#x251C;&#x2500;&#x2500; golden                     // this holds all expected output files
-                &#x2502;   &#x2514;&#x2500;&#x2500; golden_output.png      // output image expected
-                &#x2502;
-                &#x2514;&#x2500;&#x2500; bin                        //// Running &apos;make all&apos; generates in this folder:
-                    &#x251C;&#x2500;&#x2500; design_top.json        // generated CoreIR design
-                    &#x251C;&#x2500;&#x2500; design_top.txt         // generated graphiz representation of CoreIR
-                    &#x251C;&#x2500;&#x2500; graph.png              // generated graphiz image of circuit (using &apos;make graph.png&apos;)
-                    &#x251C;&#x2500;&#x2500; output_cpu.png         // output image created using CPU implementation
-                    &#x2514;&#x2500;&#x2500; output_coreir.png      // output image created during testing; should be equivalent to output_cpu.png
+└── apps
+    └── hardware_benchmarks                      // contains simpler test cases
+        ├── apps                                 // contains all apps compiled to Clockwork
+        └── tests                                // contains all simpler test cases
+            └── conv_3_3                         // one of the tests: does 3x3 convolution
+                ├── Makefile                     // specifies commands for &apos;make&apos;
+                ├── conv_3_3_generator.cpp       // contains Halide algorithm and schedule
+                ├── input.png                    // input image for testing
+                ├── process.cpp                  // runs input image with design to create ouput image
+                ├── golden                       // this holds all expected output files
+                │   └── golden_output.png        // output image expected
+                │                                
+                └── bin                          //// Running &apos;make all&apos; generates in this folder:
+                    ├── design_top.json          // generated CoreIR design after Clockwork mapping
+                    ├── conv_3_3_memory.cpp      // generated Clockwork memory file
+                    ├── conv_3_3_compute.json    // generated CoreIR compute kernels
+                    ├── clockwork_testscript.cpp // generated script used to run the Clockwork files
+                    ├── output_cpu.png           // output image created using CPU implementation
+                    └── output_clockwork.png     // output image created during testing; should be equivalent to output_cpu.png
+</code></pre><h2 id="running-multiple-applications">Running Multiple Applications</h2>
+<p>In order to run multiple tests, the Makefile in the tests or apps directory is used. There
+are a couple of make targets specifically to run on all tests, such as:</p>
+<pre><code>  make list      # list all of the tests, and which tests are not classified into a test suite
+  make check     # check each test for generated coreir, generated ubuffers, correct output
+  make cleanall  # clean bin folders for each test
+  make suites    # list all of the suites that exist
+</code></pre><p>The make targets in these directories run their associated target in individual tests.
+For example, to generate the coreir for conv_3_3, one can run:</p>
+<pre><code class="lang-sh">  <span class="hljs-built_in">cd</span> apps/hardware_targets/tests
+  make conv_3_3-clockwork
 </code></pre>
+<p>This results in conv_3_3 creating the Clockwork files, which then creates the
+Clockwork output file, <code>tests/conv_3_3/bin/conv_3_3_memory.cpp</code>. Note that the
+output is silent besides a FAILED/PASSED. To run with debug output, change
+to the desired directory and run <code>make clockwork</code> there.</p>
+<p>Test targets are:</p>
+<pre><code class="lang-sh">  make conv_3_3-clockwork <span class="hljs-comment"># create Clockwork hardware design (conv_3_3_memory.cpp)</span>
+               -run-cpu   <span class="hljs-comment"># create output image using the CPU (output_cpu.png)</span>
+               -compare   <span class="hljs-comment"># compare Clockwork output image and CPU output image. If matching, save as output.png</span>
+               -check     <span class="hljs-comment"># check for generated Clockwork, CPU, and correct output images</span>
+               -clean     <span class="hljs-comment"># delete bin folder for the test</span>
+</code></pre>
+<p>Besides individual tests, one can run a command on multiple tests. The
+tests are grouped into different test suites. The test suites are:</p>
+<pre><code>  all     # all tests in a sorted order
+  ops     # single operators, such as + &lt; &amp;&amp;
+  fpops   # single operators using floating point, such as f+ f&lt; sin exp
+  conv    # convolutions of different sizes
+  fpconv  # convolutions of different sizes using floating point numbers
+  inout   # tests of the interface, such as two inputs, bit input, floating point output
+  mem     # tests of the memory tile, such as ROM, downsample, accumulation
+</code></pre><p>For example, to run a comparison to check Clockwork correctness on the convolutions, use;</p>
+<pre><code>  make conv-compare
+</code></pre><p>Note that parallelism works with these targets, so to run the convolutions in parallel:</p>
+<pre><code>  make conv-compare -j8
+</code></pre><p>A list of all of the Makefile targets can be found in <code>apps/hardware_benchmarks/include.mk</code>.</p>
+
                                 
                                 </section>
                             
@@ -787,17 +806,61 @@ used for validation during CoreIR interpretation and CGRA simulation.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Usage Instructions","level":"1.4.2","depth":2,"next":{"title":"Halide Basics","level":"1.4.3","depth":2,"path":"halide/halide-basics.md","ref":"halide/halide-basics.md","articles":[{"title":"Writing Applications","level":"1.4.3.1","depth":3,"path":"halide/writing-apps.md","ref":"halide/writing-apps.md","articles":[]},{"title":"Supported Operations","level":"1.4.3.2","depth":3,"path":"halide/operations.md","ref":"halide/operations.md","articles":[]},{"title":"Application List","level":"1.4.3.3","depth":3,"path":"halide/application-list.md","ref":"halide/application-list.md","articles":[]}]},"previous":{"title":"Installation","level":"1.4.1","depth":2,"path":"halide/installation.md","ref":"halide/installation.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6-latest"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"halide/usage.md","mtime":"2019-08-03T22:25:34.498Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-03T22:30:06.539Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Usage Instructions","level":"1.4.2","depth":2,"next":{"title":"Halide Basics","level":"1.4.3","depth":2,"path":"halide/halide-basics.md","ref":"halide/halide-basics.md","articles":[{"title":"Writing Applications","level":"1.4.3.1","depth":3,"path":"halide/writing-apps.md","ref":"halide/writing-apps.md","articles":[]},{"title":"Writing Schedules","level":"1.4.3.2","depth":3,"path":"halide/writing-schedules.md","ref":"halide/writing-schedules.md","articles":[]},{"title":"Supported Operations","level":"1.4.3.3","depth":3,"path":"halide/operations.md","ref":"halide/operations.md","articles":[]},{"title":"Application List","level":"1.4.3.4","depth":3,"path":"halide/application-list.md","ref":"halide/application-list.md","articles":[]}]},"previous":{"title":"Installation","level":"1.4.1","depth":2,"path":"halide/installation.md","ref":"halide/installation.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mathjax":{"forceSVG":false,"version":"2.6.1"},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"The Ultimate Documentation for CGRAFlow","gitbook":"*"},"file":{"path":"halide/usage.md","mtime":"2021-09-28T21:10:21.691Z","type":"markdown"},"gitbook":{"version":"3.6.21","time":"2021-09-28T21:10:40.938Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
 
         
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
     <script src="../gitbook/gitbook.js"></script>
     <script src="../gitbook/theme.js"></script>
     
         
-        <script src="https://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         
     
         
@@ -822,10 +885,6 @@ used for validation during CoreIR interpretation and CGRA simulation.</p>
     
         
         <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
         
     
         
